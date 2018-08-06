@@ -1,0 +1,41 @@
+<aura:component>
+    
+    <aura:attribute name="formatdate" type="Date" /> 
+    <aura:attribute name="expense" type="Expense__c" />
+    
+    <aura:registerEvent name="updateExpense" type="c:expensesItemUpdate" />
+    
+  <!--  <aura:handler name="init" value="{!this}" action ="{!doInitDate}" /> -->
+    <lightning:card title="{!v.expense.Name}" iconName="standard:scan_card"
+                    >
+        <aura:set attribute="footer">
+            <p>Date: <lightning:formattedDateTime aura:id="dt"
+                                     value="{!v.expense.Date__c}"
+                                     month="short"
+                                     day="numeric"
+                                     year="numeric"
+                                     hour="2-digit"
+                                     minute="2-digit"
+                                     second="2-digit"
+                                     hour12="true"
+                                     timeZone="{!$Locale.timezone}"/></p>
+            <p class="slds-text-title"><lightning:relativeDateTime value="{!v.v.expense.Date__c}"/></p>
+        </aura:set>
+        <p class="slds-text-heading--medium slds-p-horizontal--small">
+           Amount: <lightning:formattedNumber value="{!v.expense.Amount__c}" style="currency"/>
+        </p>
+        <p class="slds-p-horizontal--small">
+            Client: {!v.expense.Client__c}
+        </p>
+        <p>
+            <lightning:input type="toggle"
+                             label="Reimbursed?"
+                             name="reimbursed"
+                             class="slds-p-around--small"
+                             checked="{!v.expense.Reimbursed__c}"
+                             messageToggleActive="Yes"
+                             messageToggleInactive="No"
+                             onchange="{!c.clickReimbursed}" />
+        </p>
+    </lightning:card>
+</aura:component>

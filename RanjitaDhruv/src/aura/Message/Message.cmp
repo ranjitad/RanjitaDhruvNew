@@ -1,0 +1,17 @@
+<aura:component >
+    <aura:attribute name="msg" type="String" default="Error"/>
+    <aura:attribute name="msgType" type="String" default="success"/>
+    <div class="demo-only" style="height: 4rem;">
+      <div class="slds-notify_container slds-is-relative">
+        <div class="{!'slds-notify slds-notify_toast slds-theme_'+v.msgType+''}" role="alert">
+          <span class="slds-assistive-text">{!v.msgType}</span>
+          <span class="{!'slds-icon_container slds-icon-utility-'+v.msgType+' slds-m-right_small slds-no-flex slds-align-top'}" title="Description of icon when needed">
+          </span>
+          <div class="slds-notify__content">
+            <h2 class="slds-text-heading_small ">{!v.msg}</h2>
+          </div>
+          <lightning:buttonIcon iconName="utility:close" alternativeText="close" class="slds-button slds-button--icon-inverse slds-notify__close" onclick="{!c.close}"/>
+        </div>
+      </div>	
+    </div>
+    </aura:component>

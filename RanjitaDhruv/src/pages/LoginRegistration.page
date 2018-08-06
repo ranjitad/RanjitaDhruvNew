@@ -1,0 +1,65 @@
+<apex:page sidebar="false" showHeader="false" StandardController="Registration__c" extensions="LoginRegistrationContrl">
+    <apex:form >
+        <apex:pageMessages id="pgmsg"/>
+            <apex:pageBlock title="Employee Registration">
+            <apex:pageBlockSection >
+                <apex:image value="{!$Resource.Loginlogo}"/>
+                <apex:pageBlockSection title="Please Register" collapsible="false" columns="1">
+                    <apex:pageblockSectionItem >
+                        <apex:outputLabel >FirstName</apex:outputLabel>
+                        <apex:inputField value="{!Registration__c.FirstName__c}" required="true"/>
+                    </apex:pageblockSectionItem>
+                        <apex:pageblockSectionItem >
+                        <apex:outputLabel >LastName</apex:outputLabel>
+                        <apex:inputField value="{!Registration__c.Name}" required="true"/>                   
+                        </apex:pageblockSectionItem>
+                    <apex:pageblockSectionItem >
+                        <apex:outputLabel >Date Of Birth</apex:outputLabel>
+                        <apex:inputField value="{!Registration__c.DOB__c}" required="true"/>
+                    </apex:pageblockSectionItem>
+                    <apex:pageblockSectionItem >
+                        <apex:outputLabel >Email</apex:outputLabel>
+                        <apex:inputField value="{!Registration__c.Email__c}" required="true"/>
+                    </apex:pageblockSectionItem>
+                    <apex:pageblockSectionItem >
+                        <apex:outputLabel >Password</apex:outputLabel>
+                        <apex:inputSecret value="{!Registration__c.Password__c}" />
+                    </apex:pageblockSectionItem>
+                    <apex:pageblockSectionItem >
+                        <apex:outputLabel >Confirm Password</apex:outputLabel>
+                        <apex:inputSecret value="{!Registration__c.Confirm_Password__c}" />
+                    </apex:pageblockSectionItem>
+                    <apex:pageblockSectionItem >
+                        <apex:outputLabel >City</apex:outputLabel>
+                        <apex:inputField value="{!Registration__c.City__c}" />
+                    </apex:pageblockSectionItem>
+                    <apex:pageblockSectionItem >
+                        <apex:outputLabel >Country</apex:outputLabel>
+                        <apex:actionRegion >
+                        <apex:inputField value="{!Registration__c.Country__c}" >
+                        	<apex:actionSupport event="onchange" action="{!showInfo}" reRender="Msg"/>
+                        </apex:inputField>
+                        </apex:actionRegion>
+                    </apex:pageblockSectionItem>
+                    <apex:outputPanel id="Msg">
+                    <apex:outputLabel value="{!countryInfo}" />
+                    </apex:outputPanel>
+                    <apex:panelGrid columns="3" style="margin-left:200px">
+                        <apex:actionStatus id="SubmitStatus">
+                            <apex:facet name="stop">
+                            <apex:commandButton value="Submit" action="{!save}" rerender="pgmsg" status="SubmitStatus" disabled="false"/>
+                            </apex:facet>
+                            <apex:facet name="start">
+                            <apex:outputpanel >
+                            <apex:commandButton value="Submitting..." status="SubmitStatus" rerender="pgmsg" disabled="true"/>
+                            </apex:outputpanel>
+                            </apex:facet>
+                        </apex:actionStatus>
+                        <apex:commandButton value="Clear" action="{!clear}" immediate="true"/>
+                        <apex:commandButton value="Back" action="/apex/LoginHome" immediate="true"/>
+                    </apex:panelGrid>
+                </apex:pageBlockSection>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

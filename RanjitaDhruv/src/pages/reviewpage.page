@@ -1,0 +1,37 @@
+<apex:page controller="Wizard_class" sidebar="false" showHeader="false" tabStyle="Account">
+<apex:form >
+ 
+ 
+  
+  <apex:pageBlock title="Review Account, Contact and Opportunity" >
+       <apex:pageBlockSection columns="1" title="Account Details" collapsible="false">
+         <apex:outputField value="{!a.Name}"/>
+         <apex:outputField value="{!a.Type}"/>
+         <apex:outputField value="{!a.Industry}"/>
+        </apex:pageBlockSection>
+      
+       <apex:pageBlockSection columns="1" title="Contact Details">
+         <apex:outputField value="{!c.FirstName}"/>
+         <apex:outputField value="{!c.LastName}"/>
+         <apex:outputField value="{!c.Phone}"/>
+         <apex:outputField value="{!c.Email}"/>
+        </apex:pageBlockSection>
+         
+      <apex:pageBlockSection columns="1" title="Opportunity Details">
+         <apex:outputField value="{!o.Name}"/>
+         <apex:outputField value="{!o.StageName}"/>
+         <apex:outputField value="{!o.Type}"/>
+         <apex:outputField value="{!o.CloseDate}"/>
+        </apex:pageBlockSection>
+   <apex:pageBlockButtons > 
+      <apex:commandButton action="{!PageAccount}" value="Edit Account"/>
+      <apex:commandButton action="{!PageContact}" value="Edit Contact"/>
+      <apex:commandButton action="{!PageOpportunity}" value="Edit Opportunity"/>
+      <apex:commandButton action="{!save}" value="Save"/>
+   </apex:pageBlockButtons>
+    
+   
+  </apex:pageBlock>
+    
+  </apex:form>
+</apex:page>

@@ -1,0 +1,12 @@
+<aura:component >
+    <c:HelloHeading/>
+	<p>Hello Lighning! </p>
+    <div>
+    	<div class ="red">  this is red </div>
+        <div class = "yellow">  this is yellow </div>
+        <div class = "blue">  this is blue </div>
+    
+    </div>
+    
+    
+</aura:component>

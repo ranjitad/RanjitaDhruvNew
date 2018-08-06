@@ -1,0 +1,76 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="Datatableclass">
+	 <!-- PAGE HEADER -->
+    <lightning:layout class="slds-page-header slds-page-header--object-home">
+        <lightning:layoutItem>
+            <lightning:icon iconName="standard:opportunity" alternativeText="opportunity"/>
+        </lightning:layoutItem>
+        <lightning:layoutItem padding="horizontal-small">
+            <div class="page-section page-header">
+                <h1 class="slds-text-heading--label">Opportunity</h1>
+                <h2 class="slds-text-heading--medium">List Of Opportunities</h2>
+            </div>
+        </lightning:layoutItem>
+    </lightning:layout>
+    <!-- / PAGE HEADER -->
+  <aura:attribute name="records" type="Object" default=""/>    
+    <aura:attribute name="fields" type="List" default=""/>
+    <aura:attribute name="objectName" type="String" default="Opportunity"/>
+    <aura:attribute name="fieldSetName" type="String" default="ReadableFields"/>
+    <aura:attribute name="selectedRows" type="List" default=""/>
+    <aura:attribute name="IsEdit" type="Boolean" default="false"/>
+    
+    <!-- Pagination -->
+    <aura:attribute name="currentRecords" type="Object" default=""/>
+    <aura:attribute name="pNumber" type="Integer" default="1"/>
+    <aura:attribute name="lastPageNumber" type="Integer"/>
+    <aura:attribute name="limitSize" type="Integer" default="5"/>
+    <aura:attribute name="msg" type="String"/>
+    <aura:attribute name="msgType" type="String"/>
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+    <aura:attribute name="spinnerType" type="String" default="default"/>
+    <aura:handler name="change" value="{!v.pNumber}" action="{!c.getSubset}"/>    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    
+    <aura:handler name="InputFormEvent" event="c:InputFormCloseEvent" action="{!c.doInit}"/>
+    <aura:handler name="recsClsEnt" event="c:InputFormCloseEvent" action="{!c.close}"/>
+    
+    <aura:if isTrue="{!v.msg}">
+    	<c:Message msg="{!v.msg}" msgType="{!v.msgType}"/>
+    </aura:if>
+    <aura:if isTrue="{!v.showSpinner}">
+    	<aura:if isTrue="{!v.spinnerType == 'default'}">
+    		<lightning:spinner alternativeText="Loading" size="small" />
+    		<aura:set attribute="else">
+    			<ui:spinner />
+    		</aura:set>
+    	</aura:if>    	
+    </aura:if>
+   <div class="slds-button-group" role="group"> 
+	    <div style="padding: 0.5rem; background-color: rgb(244, 246, 249);">
+		      <lightning:buttonIcon iconName="utility:download"  alternativeText="Settings" onclick="{!c.export}"/>
+		</div>
+		 <div style="padding: 0.5rem; background-color: rgb(244, 246, 249);">
+		      <lightning:buttonIcon iconName="utility:edit"  alternativeText="edit" onclick="{!c.edit}"/>
+		</div>
+		<div style="padding: 0.5rem; background-color: rgb(244, 246, 249);">
+		      <lightning:buttonIcon iconName="utility:new"  alternativeText="new" onclick="{!c.dynamic}"/>
+		</div>
+	</div>
+	
+    <div style="height: 300px">
+        <lightning:datatable
+                keyField="id"
+                data="{! v.currentRecords}"
+                columns="{! v.fields}"
+                hideCheckboxColumn="false" 
+                onrowselection = "{!c.getSelRows}"/>
+    </div><br/>
+    <!--
+		# - one way data binding
+		! - two way data binding
+	-->
+    <c:Pagination PageNumber="{!v.pNumber}" LastPageNumber="{!v.lastPageNumber}"/>
+    <aura:if isTrue="{!v.IsEdit}" >
+	 <c:InputFormMulRecords selectedRows = "{!v.selectedRows}" fields="{!v.fields}" IsEdit="{!v.IsEdit}"/>
+	 </aura:if><br/><br/>
+</aura:component>

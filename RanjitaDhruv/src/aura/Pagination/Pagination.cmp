@@ -1,0 +1,13 @@
+<aura:component >
+    <aura:attribute name="PageNumber" type="Integer" default="1"/>
+    <aura:attribute name="LastPageNumber" type="Integer" />
+    
+    
+    Page - > {!v.PageNumber} of {!v.LastPageNumber}<br/>
+    <div class="slds-button-group" role="group">
+      <button class="slds-button slds-button_neutral" onclick="{!c.onButtonClick}" disabled="{!v.PageNumber == 1}">First</button>
+      <button class="slds-button slds-button_neutral" onclick="{!c.onButtonClick}" disabled="{!v.PageNumber == 1}">Previous</button>
+      <button class="slds-button slds-button_neutral" onclick="{!c.onButtonClick }" disabled="{!v.PageNumber == v.LastPageNumber}">Next</button>
+      <lightning:button label="Last" title="Last" onclick="{!c.onButtonClick}" disabled="{!v.PageNumber == v.LastPageNumber}" />
+    </div>
+ </aura:component>

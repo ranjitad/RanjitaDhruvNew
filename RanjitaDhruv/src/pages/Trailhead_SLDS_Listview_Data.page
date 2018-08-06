@@ -1,0 +1,129 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>Salesforce Lightning Design System Trailhead Module</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Import the Design System style sheet -->
+  <apex:slds />
+</head>    
+<apex:remoteObjects >
+  <apex:remoteObjectModel name="Account" fields="Id,Name,LastModifiedDate"/>
+</apex:remoteObjects>
+<body>
+
+  <!-- REQUIRED SLDS WRAPPER -->
+  <div class="slds-scope">
+    <!-- MASTHEAD -->
+    <p class="slds-text-heading_label slds-m-bottom_small">
+      Salesforce Lightning Design System Trailhead Module
+    </p>
+    <!-- / MASTHEAD -->
+    <!-- PAGE HEADER -->
+    <!-- HEADING AREA -->
+<div class="slds-media slds-no-space slds-grow">
+  <div class="slds-media__figure">
+    <span class="slds-icon_container slds-icon-standard-account" title="description of icon when needed">
+  <svg aria-hidden="true" class="slds-icon">
+    <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/standard-sprite/svg/symbols.svg#account')}"></use>
+  </svg>
+  <span class="slds-assistive-text">Account Icon</span>
+</span>
+  </div>
+  <div class="slds-media__body">
+    <p class="slds-text-title_caps slds-line-height_reset">Accounts</p>
+    <h1 class="slds-page-header__title slds-m-right_small slds-align-middle slds-truncate" title="My Accounts">My Accounts</h1>
+  </div>
+</div>
+<!-- / HEADING AREA -->
+
+    <!-- / PAGE HEADER -->
+    <!-- PRIMARY CONTENT WRAPPER -->
+    <!-- PRIMARY CONTENT WRAPPER -->
+    <div class="myapp">
+      <!-- ACCOUNT LIST TABLE -->
+      <div id="account-list" class="slds-p-vertical_medium"></div>
+      <!-- / ACCOUNT LIST TABLE -->
+    </div>
+<!-- / PRIMARY CONTENT WRAPPER -->
+
+    <!-- / PRIMARY CONTENT WRAPPER -->
+    <!-- FOOTER -->
+    <!-- / FOOTER -->
+  </div>
+  <!-- / REQUIRED SLDS WRAPPER -->
+  <!-- JAVASCRIPT -->
+  <!-- JAVASCRIPT -->
+<script>
+  (function() {
+    var account = new SObjectModel.Account();
+    var outputDiv = document.getElementById('account-list');
+   var updateOutputDiv = function() {
+  account.retrieve(
+    { orderby: [{ LastModifiedDate: 'DESC' }], limit: 10 },
+    function(error, records) {
+      if (error) {
+        alert(error.message);
+      } else {
+        // create data table
+        var dataTable = document.createElement('table');
+        dataTable.className = 'slds-table slds-table_bordered slds-table_cell-buffer slds-no-row-hover';
+        // add header row
+        var tableHeader = dataTable.createTHead();
+        var tableHeaderRow = tableHeader.insertRow();
+        var tableHeaderRowCellIcon = tableHeaderRow.insertCell(0);
+        tableHeaderRowCellIcon.setAttribute('class', 'slds-cell-shrink');
+        var tableHeaderRowCell1 = tableHeaderRow.insertCell(1);
+        tableHeaderRowCell1.appendChild(document.createTextNode('Account name'));
+        tableHeaderRowCell1.setAttribute('scope', 'col');
+        tableHeaderRowCell1.setAttribute('class', 'slds-text-heading_label');
+        var tableHeaderRowCell2 = tableHeaderRow.insertCell(2);
+        tableHeaderRowCell2.appendChild(document.createTextNode('Account ID'));
+        tableHeaderRowCell2.setAttribute('scope', 'col');
+        tableHeaderRowCell2.setAttribute('class', 'slds-text-heading_label');
+
+        // build table body
+        var tableBody = dataTable.appendChild(document.createElement('tbody'))
+        var dataRow, dataRowCell1, dataRowCell2, recordName, recordId;
+        records.forEach(function(record) {
+          dataRow = tableBody.insertRow();
+          var sldsSpriteReference = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+          sldsSpriteReference.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '{!URLFOR($Asset.SLDS, 'assets/icons/standard-sprite/svg/symbols.svg#account')}');
+          var accountIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+          accountIcon.setAttributeNS('http://www.w3.org/2000/svg', 'aria-hidden', true);
+          accountIcon.classList.add('slds-icon');
+          accountIcon.appendChild(sldsSpriteReference);
+          accountIconWrapper = document.createElement('span');
+          accountIconWrapper.classList.add('slds-icon_container', 'slds-icon-standard-account');
+          accountIconWrapper.appendChild(accountIcon);
+          dataRowCellIcon = dataRow.insertCell(0);
+          dataRowCellIcon.appendChild(accountIconWrapper);
+          dataRowCell1 = dataRow.insertCell(1);
+          recordName = document.createTextNode(record.get('Name'));
+          dataRowCell1.appendChild(recordName);
+          dataRowCell2 = dataRow.insertCell(2);
+          recordId = document.createTextNode(record.get('Id'));
+          dataRowCell2.appendChild(recordId);
+        });
+        if (outputDiv.firstChild) {
+          // replace table if it already exists
+          // see later in tutorial
+          outputDiv.replaceChild(dataTable, outputDiv.firstChild);
+        } else {
+          outputDiv.appendChild(dataTable);
+        }
+      }
+    }
+  );
+}
+
+    updateOutputDiv();
+  })();
+</script>
+<!-- / JAVASCRIPT -->
+
+  <!-- / JAVASCRIPT -->
+</body>
+</html>
+</apex:page>

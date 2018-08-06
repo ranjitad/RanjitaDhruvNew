@@ -1,0 +1,4 @@
+<apex:page >
+  <apex:outputText value="This is Salesforce Classic." 
+    rendered="{! $User.UIThemeDisplayed == 'Theme4d' }"/>
+</apex:page>

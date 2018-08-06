@@ -1,0 +1,76 @@
+<aura:component controller="Datatableclass">
+	<aura:attribute name="fields" type="List" default=""/>
+	<aura:attribute name="selectedRows" type="List" default=""/>
+	<aura:attribute name="IsEdit" type="Boolean" />
+	<aura:attribute name="rowsToUpd" type="List" />
+	<aura:attribute name="objectName" type="String" />
+		
+	<aura:attribute name="msg" type="String"/>
+    <aura:attribute name="msgType" type="String"/>
+    	
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	<aura:registerEvent name="InputFormEvent" type="c:InputFormCloseEvent"/>
+			    
+	<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <aura:if isTrue="{!v.msg}">
+	    	<c:Message msg="{!v.msg}" msgType="{!v.msgType}"/>
+	    </aura:if>
+                <div class="slds-modal__container">
+                    <!-- ###### MODAL BOX HEADER Start ######-->
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeModel }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Input Form</h2>
+                    </header>
+                      <!--###### MODAL BOX BODY Part Start######-->
+                    <div class="slds-modal__content slds-p-around_large" id="modal-content-id-1">
+      
+		  <table class="slds-table slds-table_bordered slds-table_cell-buffer" id="table">
+				<thead>
+			<tr class="slds-text-title_caps">
+				<aura:iteration items="{!v.fields}" var="fld" >
+				<th >
+					<div class="slds-truncate" title="{!fld.label}">{!fld.label}</div>
+				</th>
+			  	</aura:iteration>
+			</tr>
+			</thead>
+		<tbody >
+			<aura:iteration items="{!v.selectedRows}" var="row" indexVar="index">
+				<tr id="{!index}">
+					<aura:iteration items="{!row.entries}" var="fldVal">		
+						<td data-label="{!fldVal.value}">					
+							<div class="slds-form-element">
+							  <div class="slds-form-element__control">
+							    <input type="text" id="{!fldVal.fieldName}" class="slds-input" placeholder="{!fldVal.type}" value="{!fldVal.value}"/>
+							  </div>
+							</div>
+						</td>							
+					</aura:iteration>
+				</tr>
+		</aura:iteration>	
+	</tbody>
+	</table>
+                    </div>
+                    <!--###### MODAL BOX FOOTER Part Start ######-->
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral" 
+                                          label="Ok"
+                                          title="Ok" disabled="{!!v.msg}"
+                                          onclick="{! c.closeModel }"/>
+                        <lightning:button variant="brand" 
+                                          label="Save"
+                                          title="Save"
+                                          onclick="{!c.onSave }"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+            
+	
+
+</aura:component>

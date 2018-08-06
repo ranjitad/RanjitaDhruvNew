@@ -1,0 +1,8 @@
+<apex:page >
+  <apex:form >
+      <apex:pageMessage severity="CONFIRM" strength="1" summary="You have been registered successfully"/>
+      <apex:outputPanel style="margin-left:20px">
+          Please &nbsp;<apex:outputLink value="/apex/LoginHome">Click here</apex:outputLink> to go to Home page.
+      </apex:outputPanel>
+  </apex:form>
+</apex:page>
